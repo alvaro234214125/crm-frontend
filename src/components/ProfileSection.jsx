@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import ImageUser from "/imgs/user-circle-svgrepo-com.svg"
 
 export default function ProfileSection({ collapsed }) {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function ProfileSection({ collapsed }) {
         onClick={() => setOpen(!open)}
       >
         <img 
-          src="/imgs/user-circle-svgrepo-com.svg"
+          src={ImageUser}
           alt="User"
           className="w-15 h-15 rounded-full"
         />
