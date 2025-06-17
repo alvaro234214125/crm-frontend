@@ -1,0 +1,46 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite
+dist/
+.vite/
+*.local
+
+# Tailwind/JIT cache
+.tailwind/
+.tailwind-cache/
+
+# Env
+.env
+.env.*.local
+!.env.example
+
+# Testing
+coverage/
+test-results/
+
+# Editor settings
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS-specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# System
+*.log
+*.bak
+*.orig
+*.tsbuildinfo

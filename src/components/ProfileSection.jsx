@@ -1,0 +1,55 @@
+import { useState, useRef, useEffect } from "react";
+import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+
+export default function ProfileSection({ collapsed }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <div
+        className={`flex items-center gap-3 cursor-pointer transition-all ${
+          collapsed ? "justify-center" : ""
+        }`}
+        onClick={() => setOpen(!open)}
+      >
+        <img
+          src="https://i.pravatar.cc/40"
+          alt="User"
+          className="w-10 h-10 rounded-full"
+        />
+        {!collapsed && (
+          <div>
+            <p className="font-medium">Alvaro</p>
+            <p className="text-sm text-gray-500">Admin</p>
+          </div>
+        )}
+      </div>
+
+      {open && (
+        <div
+          className={`absolute bottom-16 ${
+            collapsed ? "left-14" : "left-0"
+          } bg-white border border-gray-200 rounded-lg shadow-xl w-44 z-10 animate-fade-in`}
+        >
+          <button className="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">
+            <FaUserCircle className="mr-2" /> Ver perfil
+          </button>
+          <button className="flex items-center w-full px-4 py-3 text-sm text-purple-600 hover:bg-purple-50 hover:text-purple-700 border-t">
+            <FaSignOutAlt className="mr-2" /> Cerrar sesión
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
