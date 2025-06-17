@@ -23,10 +23,10 @@ export default function ProfileSection({ collapsed }) {
         }`}
         onClick={() => setOpen(!open)}
       >
-        <img
-          src="https://i.pravatar.cc/40"
+        <img 
+          src="/imgs/user-circle-svgrepo-com.svg"
           alt="User"
-          className="w-10 h-10 rounded-full"
+          className="w-15 h-15 rounded-full"
         />
         {!collapsed && (
           <div>
