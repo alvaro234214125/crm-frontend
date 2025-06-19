@@ -5,7 +5,7 @@ export default function ProfileHeader({ user }) {
           {user.name?.charAt(0).toUpperCase()}
         </div>
         <div>
-          <h2 className="text-xl font-semibold"><span className="text-purple-700">{user.name}</span></h2>
+          <h2 className="text-xl font-semibold"><span className="text-gray-800">{user.name}</span></h2>
           <p className="text-sm text-gray-500">{user.role?.name}</p>
         </div>
       </div>

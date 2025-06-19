@@ -2,57 +2,52 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-export function useAuth() {
+export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
         try {
           const res = await fetch('http://localhost:8080/auth/me', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           });
           if (res.ok) {
             const data = await res.json();
             setUser(data);
           } else {
-            setUser(null);
-            localStorage.removeItem('token');
+            logout();
           }
-        } catch (error) {
-          console.error('Error al obtener usuario:', error);
-          setUser(null);
-          localStorage.removeItem('token');
+        } catch {
+          logout();
         }
-      } else {
-        setUser(null);
       }
+      setLoading(false);
     };
 
     fetchUser();
   }, [token]);
 
-  const login = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
+  const login = (tokenValue) => {
+    localStorage.setItem('token', tokenValue);
+    setToken(tokenValue);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    setToken(null);
     setUser(null);
+    setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};

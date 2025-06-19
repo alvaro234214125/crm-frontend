@@ -60,7 +60,12 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route path="/perfil" element={<UserProfile />} />
+            <Route path="/perfil" element={
+              <PrivateRoute>
+              <UserProfile />
+              </PrivateRoute>
+              } 
+            />
             <Route path="/no-autorizado" element={<AccessDenied />} />
           </Route>
         </Routes>

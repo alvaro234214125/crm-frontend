@@ -17,18 +17,27 @@ export default function RolesPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [page, setPage] = useState(0);
+  const [size] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
 
   useEffect(() => {
     if (user && user.role?.name.toLowerCase() !== "admin") {
-      navigate("/no-autorizado"); 
+      navigate("/no-autorizado");
     }
   }, [user]);
 
-  const fetchRoles = async () => {
+  const fetchRoles = async (pageNumber = 0) => {
     setLoading(true);
     try {
-      const res = await api.get("/roles");
-      setRoles(res.data);
+      const res = await api.get("/roles", {
+        params: { page: pageNumber, size },
+      });
+      setRoles(res.data.content);
+      setPage(res.data.page);
+      setTotalPages(res.data.totalPages);
+      setTotalElements(res.data.totalElements);
     } catch (err) {
       console.error("Error al cargar roles", err);
     } finally {
@@ -85,7 +94,7 @@ export default function RolesPage() {
   const roleStats = [
     {
       label: "Roles Totales",
-      value: `${totalRoles}`,
+      value: `${totalElements}`,
       change: "",
       icon: <FaUsers className="text-blue-500" />,
     },
@@ -117,6 +126,25 @@ export default function RolesPage() {
           }}
           onDelete={handleDelete}
         />
+        <div className="flex justify-center mt-4 space-x-2">
+          <button
+            onClick={() => fetchRoles(page - 1)}
+            disabled={page === 0}
+            className="bg-gray-200 px-3 py-1 rounded disabled:opacity-50"
+          >
+            Anterior
+          </button>
+          <span className="px-3 py-1">
+            Página {page + 1} de {totalPages}
+          </span>
+          <button
+            onClick={() => fetchRoles(page + 1)}
+            disabled={page + 1 >= totalPages}
+            className="bg-gray-200 px-3 py-1 rounded disabled:opacity-50"
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
 
       <RoleFormModal
