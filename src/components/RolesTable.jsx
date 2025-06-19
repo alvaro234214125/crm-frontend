@@ -18,13 +18,13 @@ export default function RolesTable({ roles, onEdit, onDelete }) {
                   onClick={() => onEdit(r)}
                   className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-1.5 rounded-md text-sm"
                 >
-                  <span className="font-medium">Editar</span>
+                  Editar
                 </button>
                 <button
                   onClick={() => onDelete(r.id)}
                   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm"
                 >
-                  <span className="font-medium">Eliminar</span>
+                  Eliminar
                 </button>
               </td>
             </tr>

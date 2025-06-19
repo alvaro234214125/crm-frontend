@@ -14,7 +14,6 @@ export default function RoleFormModal({ visible, onClose, onSubmit, initialData 
 
   useEffect(() => {
     if (visible) {
-      // Lanza animación
       setTimeout(() => setShowContent(true), 10);
     } else {
       setShowContent(false);
@@ -25,7 +24,7 @@ export default function RoleFormModal({ visible, onClose, onSubmit, initialData 
 
   const handleClose = () => {
     setShowContent(false);
-    setTimeout(onClose, 200); // Espera a animación
+    setTimeout(onClose, 200);
   };
 
   return (
@@ -46,7 +45,7 @@ export default function RoleFormModal({ visible, onClose, onSubmit, initialData 
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Nombre del rol"
-          className="w-full px-3 py-2 border rounded mb-4"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
         />
         <div className="flex justify-end gap-2">
           <button

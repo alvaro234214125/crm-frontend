@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import RolesTable from "../components/RolesTable";
 import RoleFormModal from "../components/RoleFormModal";
 import Swal from "sweetalert2";
 import Topbar from "../components/Topbar";
 import StatsCards from "../components/StatsCards";
-import { FaUserShield, FaUserEdit, FaUsers } from "react-icons/fa";
-import { FiChevronDown, FiPlus, FiUser, FiFileText, FiDollarSign, FiGlobe } from "react-icons/fi";
+import { FaUsers } from "react-icons/fa";
+import { FiPlus } from "react-icons/fi";
 
 export default function RolesPage() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editData, setEditData] = useState(null);
+
+  useEffect(() => {
+    if (user && user.role?.name.toLowerCase() !== "admin") {
+      navigate("/no-autorizado"); 
+    }
+  }, [user]);
 
   const fetchRoles = async () => {
     setLoading(true);
@@ -71,10 +81,6 @@ export default function RolesPage() {
   }, []);
 
   const totalRoles = roles.length;
-  const adminRoles = roles.filter((r) =>
-    r.name.toLowerCase().includes("admin")
-  ).length;
-  const recentlyEdited = roles.filter((r) => r.id > roles.length - 3).length; // simulado
 
   const roleStats = [
     {

@@ -1,10 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
-import { FiChevronDown, FiPlus, FiUser, FiFileText, FiDollarSign, FiGlobe } from "react-icons/fi";
+import {
+  FiChevronDown,
+  FiPlus,
+  FiUser,
+  FiFileText,
+  FiDollarSign,
+  FiGlobe,
+} from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
 
 export default function Topbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
+  const { user } = useAuth();
 
   const now = new Date();
   const hour = now.getHours();
@@ -36,7 +45,7 @@ export default function Topbar() {
     <div className="flex justify-between items-center mb-6 relative">
       <div>
         <h1 className="text-xl font-semibold text-gray-800">
-          {getGreeting()}, Alvaro! 👋🏼
+          {getGreeting()}, {user?.name || "Usuario"}! 👋🏼
         </h1>
         <p className="text-sm text-gray-500 capitalize">{dateString}</p>
       </div>
